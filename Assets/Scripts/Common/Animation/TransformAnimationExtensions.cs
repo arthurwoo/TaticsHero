@@ -59,12 +59,12 @@ public static class TransformAnimationExtensions
 	
 	public static Tweener ScaleTo (this Transform t, Vector3 scale)
 	{
-		return MoveTo (t, scale, Tweener.DefaultDuration);
+		return ScaleTo (t, scale, Tweener.DefaultDuration);
 	}
 	
 	public static Tweener ScaleTo (this Transform t, Vector3 scale, float duration)
 	{
-		return MoveTo (t, scale, duration, Tweener.DefaultEquation);
+		return ScaleTo (t, scale, duration, Tweener.DefaultEquation);
 	}
 	
 	public static Tweener ScaleTo (this Transform t, Vector3 scale, float duration, Func<float, float, float, float> equation)

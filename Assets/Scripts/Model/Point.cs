@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 [System.Serializable]
-public struct Point {	
+public struct Point:IEquatable<Point> {	
 
 	public int x;
 	public int y;

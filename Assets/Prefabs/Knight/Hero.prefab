@@ -56,10 +56,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 430524}
-  - 114: {fileID: 11490378}
-  - 114: {fileID: 11421348}
-  - 114: {fileID: 11474592}
-  - 114: {fileID: 11415380}
+  - 114: {fileID: 11426620}
+  - 114: {fileID: 11465698}
+  - 114: {fileID: 11465718}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
@@ -305,6 +304,24 @@ GameObject:
   - 4: {fileID: 468892}
   m_Layer: 0
   m_Name: Skeleton_UpperLeg_R
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &155468
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 447588}
+  - 114: {fileID: 11419226}
+  - 114: {fileID: 11465482}
+  - 114: {fileID: 11466754}
+  m_Layer: 0
+  m_Name: Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -736,7 +753,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 447588}
   m_Father: {fileID: 437494}
   m_RootOrder: 1
 --- !u!4 &432658
@@ -847,6 +865,18 @@ Transform:
   m_Children:
   - {fileID: 446186}
   m_Father: {fileID: 421562}
+  m_RootOrder: 0
+--- !u!4 &447588
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155468}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 430524}
   m_RootOrder: 0
 --- !u!4 &452558
 Transform:
@@ -1052,18 +1082,18 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 1
---- !u!114 &11415380
+--- !u!114 &11419226
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 111314}
+  m_GameObject: {fileID: 155468}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e69eb6ad0bd742b59bf255fd4995e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11421348
+--- !u!114 &11426620
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1071,9 +1101,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 111314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee477e8f15ea549a2b734375878dd298, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f4c0e98807114bc4919d4c6b44209fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 45
 --- !u!114 &11453920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1086,18 +1117,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dir: 3
---- !u!114 &11474592
+--- !u!114 &11465482
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 111314}
+  m_GameObject: {fileID: 155468}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f529f87f59ae4c449ead9b8632bf276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11490378
+--- !u!114 &11465698
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1108,8 +1139,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 278c9c7f5a52b451cbc8a37d2a383b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontal: 1
+  horizontal: 3
   vertical: 2147483647
+--- !u!114 &11465718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52db9213d52bc41e29ae1d554691a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horizontal: 1
+  vertical: 1
+--- !u!114 &11466754
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 155468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b166a679be74a0a8380cf92642a182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!137 &13735686
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
