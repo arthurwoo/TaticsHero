@@ -28,4 +28,6 @@ public class Equippable : MonoBehaviour {
 		for (int i = 0; i < features.Length; i++)
 			features [i].Deactivate ();
 	}
+
+
 }

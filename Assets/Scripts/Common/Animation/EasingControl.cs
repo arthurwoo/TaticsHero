@@ -85,17 +85,20 @@ public class EasingControl : MonoBehaviour
 	
 	public void Pause ()
 	{
-		SetPlayState(PlayState.Paused);
+		if (IsPlaying)
+			SetPlayState (PlayState.Paused);
 	}
 	
 	public void Resume ()
 	{
-		SetPlayState(previousPlayState);
+		if (playState == PlayState.Paused)
+			SetPlayState (previousPlayState);
 	}
 	
 	public void Stop ()
 	{
 		SetPlayState(PlayState.Stopped);
+		previousPlayState = PlayState.Stopped;
 		loops = 0;
 		if (endBehaviour == EndBehaviour.Reset)
 			SeekToBeginning ();
@@ -108,8 +111,7 @@ public class EasingControl : MonoBehaviour
 		currentOffset = newValue - currentValue;
 		currentValue = newValue;
 		
-		if (updateEvent != null)
-			updateEvent(this, EventArgs.Empty);
+		OnUpdate ();
 	}
 	
 	public void SeekToBeginning ()
@@ -123,21 +125,43 @@ public class EasingControl : MonoBehaviour
 	}
 	#endregion
 
+	protected virtual void OnUpdate() {
+		if (updateEvent != null)
+			updateEvent (this, EventArgs.Empty);
+	}
+
+	protected virtual void OnLoop() {
+		if (loopedEvent != null)
+			loopedEvent (this, EventArgs.Empty);
+	}
+
+	protected virtual void OnComplete() {
+		if (completedEvent != null)
+			completedEvent (this, EventArgs.Empty);
+	}
+
+	protected virtual void OnStateChange() {
+		if (stateChangeEvent != null)
+			stateChangeEvent (this, EventArgs.Empty);
+	}
+
 	#region Private
 	void SetPlayState (PlayState target)
 	{
-		if (playState == target)
-			return;
-		
-		previousPlayState = playState;
-		playState = target;
-		
-		if (stateChangeEvent != null)
-			stateChangeEvent(this, EventArgs.Empty);
-		
-		StopCoroutine("Ticker");
-		if (IsPlaying)
-			StartCoroutine("Ticker");
+		if (isActiveAndEnabled) {
+			if (playState == target)
+				return;
+
+			previousPlayState = playState;
+			playState = target;
+			OnStateChange ();
+			StopCoroutine ("Ticker");
+			if (IsPlaying)
+				StartCoroutine ("Ticker");
+		} else {
+			previousPlayState = target;
+			playState = PlayState.Paused;
+		}
 	}
 
 	IEnumerator Ticker ()
@@ -180,8 +204,7 @@ public class EasingControl : MonoBehaviour
 		currentOffset = frameValue - currentValue;
 		currentValue = frameValue;
 		
-		if (updateEvent != null)
-			updateEvent(this, EventArgs.Empty);
+		OnUpdate ();
 		
 		if (finished)
 		{
@@ -193,14 +216,11 @@ public class EasingControl : MonoBehaviour
 				else // PingPong
 					SetPlayState( playState == PlayState.Playing ? PlayState.Reversing : PlayState.Playing );
 				
-				if (loopedEvent != null)
-					loopedEvent(this, EventArgs.Empty);
+				OnLoop();
 			} 
 			else
 			{
-				if (completedEvent != null)
-					completedEvent(this, EventArgs.Empty);
-				
+				OnComplete();
 				Stop ();
 			}
 		}

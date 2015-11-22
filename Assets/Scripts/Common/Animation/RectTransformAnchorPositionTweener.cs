@@ -5,13 +5,12 @@ public class RectTransformAnchorPositionTweener : Vector3Tweener {
 
 	RectTransform rt;
 
-	protected override void Awake() {
-		base.Awake ();
+	void Awake() {
 		rt = transform as RectTransform;
 	}
 
-	protected override void OnUpdate(object sender, System.EventArgs e) {
-		base.OnUpdate (sender, e);
-		rt.anchoredPosition = currentValue;
+	protected override void OnUpdate() {
+		base.OnUpdate ();
+		rt.anchoredPosition = currentTweenValue;
 	}
 }
