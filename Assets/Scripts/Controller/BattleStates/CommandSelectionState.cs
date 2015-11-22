@@ -9,7 +9,7 @@ public class CommandSelectionState : BaseAbilityMenuState {
 			menuTitle = "指令";
 			menuOptions = new List<string>(3);
 			menuOptions.Add("移动");
-			menuOptions.Add("攻击");
+			menuOptions.Add("行动");
 			menuOptions.Add("等待");
 		}
 

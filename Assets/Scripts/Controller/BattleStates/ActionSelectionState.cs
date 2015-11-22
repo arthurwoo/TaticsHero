@@ -5,29 +5,39 @@ using System.Collections.Generic;
 public class ActionSelectionState : BaseAbilityMenuState {
 
 	public static int category;
-	string[] whiteMagicOptions = new string[] {"治疗", "复活", "圣光"};
-	string[] blackMagicOptions = new string[] {"火球", "冰球", "闪电"};
+	AbilityCatalog catalog;
 
 	protected override void LoadMenu () {
-		if (menuOptions == null)
-			menuOptions = new List<string> (3);
+		catalog = turn.actor.GetComponentInChildren<AbilityCatalog> ();
+		GameObject container = catalog.GetCategory (category);
+		menuTitle = container.name;
 
-		if (category == 0) {
-			menuTitle = "白魔法";
-			SetOptions (whiteMagicOptions);
-		} else {
-			menuTitle = "黑魔法";
-			SetOptions (blackMagicOptions);
+		int count = catalog.AbilityCount (container);
+		if (menuOptions == null)
+			menuOptions = new List<string> ();
+		else
+			menuOptions.Clear ();
+
+		bool[] locks = new bool[count];
+		for (int i = 0; i < count; i++) {
+			Ability ability = catalog.GetAbility(category, i);
+			AbilityMagicCost cost = ability.GetComponent<AbilityMagicCost>();
+			if(cost)
+				menuOptions.Add(string.Format("{0}:{1}", ability.name, cost.amount));
+			else
+				menuOptions.Add(ability.name);
+			locks[i] = !ability.CanPerform();
 		}
 
 		abilityMenuPanelController.Show (menuTitle, menuOptions);
+
+		for (int i = 0; i < count; i++)
+			abilityMenuPanelController.SetLocked (i, locks [i]);
 	}
 
 	protected override void Confirm () {
-		turn.hasUnitActed = true;
-		if (turn.hasUnitMoved)
-			turn.lockMove = true;
-		owner.ChangeState<CommandSelectionState> ();
+		turn.ability = catalog.GetAbility (category, abilityMenuPanelController.selection);
+		owner.ChangeState<AbilityTargetState> ();
 	}
 
 	protected override void Cancel () {

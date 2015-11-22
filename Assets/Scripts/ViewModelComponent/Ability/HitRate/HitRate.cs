@@ -11,6 +11,12 @@ public abstract class HitRate : MonoBehaviour {
 
 	public abstract int Calculate(Tile target);
 
+	public virtual bool RollForHit(Tile target) {
+		int roll = UnityEngine.Random.Range (0, 101);
+		int chance = Calculate (target);
+		return roll <= chance;
+	}
+
 	protected virtual void Start() {
 		attacker = GetComponentInParent<Unit> ();
 	}

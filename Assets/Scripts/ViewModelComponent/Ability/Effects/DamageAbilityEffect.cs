@@ -4,14 +4,6 @@ using System.Collections.Generic;
 
 public class DamageAbilityEffect : BaseAbilityEffect {
 
-	public const string GetAttackNotification = "DamageAbilityEffect.GetAttackNotification";
-	public const string GetDefenseNotification = "DamageAblityEffect.GetDefenseNotification";
-	public const string GetPowerNotification = "DamageAbilityEffect.GetPowerNotification";
-	public const string TweakDamageNotification = "DamageAbilityEffect.TweakDamageNotification";
-
-	const int minDamage = -999;
-	const int maxDamage = 999;
-
 	public override int Predict (Tile target) {
 		Unit attacker = GetComponentInParent<Unit> ();
 		Unit defender = target.content.GetComponent<Unit> ();
@@ -30,33 +22,19 @@ public class DamageAbilityEffect : BaseAbilityEffect {
 		damage = GetStat (attacker, defender, TweakDamageNotification, damage);
 
 		damage = Mathf.Clamp (damage, minDamage, maxDamage);
-		return damage;
+		return -damage;
 	}
 
-	public override void Apply (Tile target) {
+	protected override int OnApply (Tile target) {
 		Unit defender = target.content.GetComponent<Unit> ();
 
 		int value = Predict (target);
-		value *= Mathf.FloorToInt (UnityEngine.Random.Range (0.9f, 1.1f));
+		value = Mathf.FloorToInt (value * UnityEngine.Random.Range (0.9f, 1.1f));
 		value = Mathf.Clamp (value, minDamage, maxDamage);
 
 		Stats s = defender.GetComponent<Stats> ();
-		s [StatTypes.HP] -= value;
-	}
+		s [StatTypes.HP] += value;
 
-	int GetStat(Unit attacker, Unit defender, string notification, int startValue) {
-		var mods = new List<ValueModifier> ();
-		var info = new Info<Unit, Unit, List<ValueModifier>> (attacker, defender, mods);
-		this.PostNotification (notification, info);
-		mods.Sort ();
-
-		float value = startValue;
-		for (int i = 0; i < mods.Count; i++)
-			value = mods[i].Modify(startValue, value);
-
-		int retValue = Mathf.FloorToInt (value);
-		retValue = Mathf.Clamp (retValue, minDamage, maxDamage);
-
-		return retValue;
+		return value;
 	}
 }
