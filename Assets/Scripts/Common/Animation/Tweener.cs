@@ -12,7 +12,7 @@ public abstract class Tweener : EasingControl
 	#endregion
 	
 	#region Event Handlers
-	protected virtual void OnComplete ()
+	protected override void OnComplete ()
 	{
 		base.OnComplete ();
 		if (destroyOnComplete)

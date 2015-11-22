@@ -84,7 +84,7 @@ public class Panel : MonoBehaviour {
 			return null;
 
 		if (InTransition)
-			Transition.easingControl.Stop ();
+			Transition.Stop ();
 
 		if (animated) {
 			Transition = anchor.MoveToAnchorPisition (p.myAnchor, p.parentAnchor, p.offset);

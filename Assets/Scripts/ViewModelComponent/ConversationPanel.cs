@@ -16,8 +16,8 @@ public class ConversationPanel : MonoBehaviour {
 			return;
 
 		Tweener t = arrow.transform.MoveToLocal (new Vector3 (pos.x, pos.y - 5, pos.z), 0.5f, EasingEquations.EaseInQuad);
-		t.easingControl.loopType = EasingControl.LoopType.PingPong;
-		t.easingControl.loopCount = -1;
+		t.loopType = EasingControl.LoopType.PingPong;
+		t.loopCount = -1;
 	}
 
 	public IEnumerator Display(SpeakerData sd) {
