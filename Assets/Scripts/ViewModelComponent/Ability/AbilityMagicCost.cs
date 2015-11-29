@@ -29,7 +29,6 @@ public class AbilityMagicCost : MonoBehaviour {
 	}
 
 	void OnDidPerformNotification(object sender, object args) {
-		Debug.Log ("OnDidPerformNotification");
 		Stats s = GetComponentInParent<Stats> ();
 		s [StatTypes.MP] -= amount;
 	}
