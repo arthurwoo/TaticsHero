@@ -14,6 +14,7 @@ public class InitBattleState : BattleState {
 		Point p = new Point ((int)levelData.tiles [0].x, (int)levelData.tiles [0].y);
 		SelectTile (p);
 		SpawnTestUnits ();
+		AddVictoryCondition ();
 		owner.round = owner.gameObject.AddComponent<TurnOrderController> ().Round();
 		yield return null;
 		owner.ChangeState<CutSceneState> ();
@@ -43,5 +44,13 @@ public class InitBattleState : BattleState {
 		}
 
 		SelectTile (units [0].tile.pos);
+	}
+
+	void AddVictoryCondition() {
+		DefeatTargetVictoryCondition vc = owner.gameObject.AddComponent<DefeatTargetVictoryCondition> ();
+		Unit enemy = units [units.Count - 1];
+		vc.target = enemy;
+		Health health = enemy.GetComponent<Health> ();
+		health.MinHP = 10;
 	}
 }

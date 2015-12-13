@@ -15,7 +15,8 @@ public class StatPanel : MonoBehaviour {
 	public Text lvLabel;
 
 	public void Display(GameObject obj) {
-		background.sprite = UnityEngine.Random.value > 0.5f ? enemyBackground : allyBackground;
+		Alliance alliance = obj.GetComponent<Alliance> ();
+		background.sprite = alliance.type == Alliances.Enemy ? enemyBackground : allyBackground;
 		nameLabel.text = obj.name;
 		Stats stats = obj.GetComponent<Stats> ();
 		if (stats) {

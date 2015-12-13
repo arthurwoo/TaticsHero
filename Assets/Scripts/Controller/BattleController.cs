@@ -21,6 +21,7 @@ public class BattleController : StateMachine {
 	public StatPanelController statPanelController;
 	public IEnumerator round;
 	public HitSuccessIndicator hitSuccessIndicator;
+	public FacingIndicator facingIndicator;
 
 	void Start() {
 		ChangeState<InitBattleState> ();

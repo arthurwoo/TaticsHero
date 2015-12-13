@@ -16,7 +16,11 @@ public class PerformAbilityState : BattleState {
 		yield return null;
 		ApplyAbility ();
 
-		if (turn.hasUnitMoved)
+		if (IsBattleOver ())
+			owner.ChangeState<CutSceneState> ();
+		else if (!UnitHasControl ())
+			owner.ChangeState<SelectUnitState> ();
+		else if (turn.hasUnitMoved)
 			owner.ChangeState<EndFacingState> ();
 		else
 			owner.ChangeState<CommandSelectionState> ();
@@ -24,5 +28,9 @@ public class PerformAbilityState : BattleState {
 
 	void ApplyAbility() {
 		turn.ability.Perform (turn.targets);
+	}
+
+	bool UnitHasControl() {
+		return turn.actor.GetComponentInChildren<KnockOutStatusEffect> () == null;
 	}
 }

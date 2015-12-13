@@ -8,7 +8,7 @@ public class BaseException {
 		private set;
 	}
 
-	private bool defaultToggle;
+	public readonly bool defaultToggle;
 
 	public BaseException(bool defaultToggle) {
 		this.defaultToggle = defaultToggle;
